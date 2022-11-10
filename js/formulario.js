@@ -153,7 +153,7 @@ const validacionGeneral = ()=>
 
     var isInValidCode = !tieneSoloNumeros(codSegForm.value);
 
-    if(isInValidCode || codSegForm.value.length != 4)
+    if(isInValidCode || codSegForm.value.length != 3)
     {
         codSegForm.classList.add("error");
         hayError = true;
