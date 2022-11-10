@@ -1,0 +1,212 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    margin: 0px;
+    background: rgb(168,229,241);
+    background: linear-gradient(180deg, rgba(168,229,241,1) 0%, rgba(188,188,215,1) 34%, rgba(216,216,231,1) 89%);
+
+    
+    /* background-image: url(/img/fondoPagina.jpg); */
+}
+
+/* navbar */
+
+.nav-container{
+    position: sticky;
+    z-index: 3;
+    top: 0;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    height: 12vh;
+    background-color: #6c8779;
+}
+.navbar-logo{
+    justify-self: start;
+    margin-left: 20px;
+    color: white;
+    margin-top: 4vh;
+    cursor: pointer;
+}
+.ver-carrito{
+    font-size: 25px;
+    margin-right: 20px;
+    margin-top: 3.5vh;
+    cursor: pointer;
+}
+
+/* Banner */
+
+.banner {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    /* background-image: url(/img/fondoPagina.jpg); */
+
+}
+.banner-container{
+    text-align: center;
+    padding: 15% 0;
+    
+}
+.banner h1{
+    margin: 0;
+    color: rgb(0, 0, 0);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: 62px;
+    font-weight: bold;
+    
+}
+.banner p {
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    opacity: 0.7;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2) ;
+}
+
+/* product card */
+
+.tienda-content{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-left: 80px;
+    margin-right: 80px; 
+}
+.card{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    margin: 10px;
+    text-align: center;
+    font-family: arial;
+    border-radius: 10px;
+    background-color: white;
+}
+.card > img {
+    width: 250px; /* cambiar a un porcentaje luego de modifcar fotos */
+    height: 250px;
+}
+.card > p {
+    height: 25px;
+}
+.price {
+    color: rgba(0, 0, 0, 1);
+    font-size: 22px;
+
+}
+.price2{
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+}
+.card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: rgb(79, 18, 18);
+    text-align: center;
+    cursor: pointer;
+    width: 90%;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+
+.compra{
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: rgb(79, 18, 18);
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 3%;
+}
+.card button:hover {
+    opacity: 0.7;
+}
+
+/* modal  */
+
+.modal-container {
+    width: 80%;
+    margin: 0 10%;
+    max-height: 88vh;
+    color: white;
+    background-color: #404c44;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: fixed;
+    overflow: auto;
+    z-index: 9;
+    top: 12vh;
+    scrollbar-color: none;
+}
+
+.modal-container::-webkit-scrollbar{
+    display: none;
+}
+
+.modal-header{
+    display: flex;
+    justify-content: space-around;
+    background-color: #0a0909;
+    color: white;
+    width: 100%;
+}
+.modal-header-title{
+    justify-self: start;
+}
+.modal-header-button{
+    cursor: pointer;
+}
+.modal-container > .modal-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    margin: 10px;
+}
+.modal-container > div > img {
+    height: 120px;
+    width: 120px;
+}
+.total-content {
+    font-size: 25px;
+    padding: 20px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.delete-product {
+    cursor: pointer;
+    background-color: rgb(23, 12, 12, 0%);
+}
+.cantidadCarrito{
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 4px;
+    top: 37px;
+    right: 14px;
+    position: absolute;
+    display: none;
+}
+.suma{
+    cursor: pointer;
+    color: white;
+}
+.resta{
+    cursor: pointer;
+    color: white;}
