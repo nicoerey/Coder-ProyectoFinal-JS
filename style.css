@@ -11,6 +11,11 @@ body{
     /* background-image: url(/img/fondoPagina.jpg); */
 }
 
+.error
+{
+    border: 1px solid red;
+}
+
 /* navbar */
 
 .nav-container{
@@ -210,3 +215,46 @@ body{
 .resta{
     cursor: pointer;
     color: white;}
+
+/* formulario */
+
+.form{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.carrito-resumen {
+    height: 25%;
+}
+.carrito-resumen > p {
+    text-align: center;
+    height: 25%;
+}
+
+.formulario{
+    height: 75%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-left: auto;
+	margin-right: auto;
+}
+.formulario > h2{
+    display: block;
+}
+.formulario > input  {
+
+    display: flex;
+    align-items: center;
+    margin: 1%;
+    width: 50%;
+    height: 2rem;
+    cursor: pointer;
+}
+.formulario > h3 {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+} 

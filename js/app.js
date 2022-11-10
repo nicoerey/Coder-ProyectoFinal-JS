@@ -1,16 +1,3 @@
-function primeraCargaHTML()
-{
-	document.addEventListener("DOMContentLoaded", () =>
-	{
-		fetchInfo()
-		carritoContador()
-		Swal.fire({
-			title: "Bienvenido a Tienda Fake " + saludos[Math.floor(Math.random() * saludos.length)]
-		})
-	})
-}
-
-
 const divProducts = document.getElementById("tiendaContent")
 const verCarrito = document.querySelector(".ver-carrito")
 const modalContainer = document.getElementById("modal-container")
@@ -42,21 +29,32 @@ function productosAlDom(data)
 		if (product.disponibilidad)
 		{
 			let content = document.createElement("div")
-			let button = document.createElement("button")
-
-			content.innerHTML = `
-            <img src="${product.imagen}" alt="${product.nombre}">
-            <h2>${product.nombre}</h2>
-            <p>${product.descripcion}</p>
-            <p class="price">${"$" + product.precio}</p>
-            `
 			content.classList.add("card")
-			divProducts.append(content)
 
-			
+			let imagenDom =  document.createElement("img");
+            imagenDom.src = product.imagen;
+            imagenDom.alt = product.nombre;
+
+            let h2 = document.createElement("h2");
+		    h2.textContent = product.nombre;
+
+            let pDescripcion = document.createElement("p");
+		    pDescripcion.textContent =product.descripcion;
+
+            let pPrecio = document.createElement("p");
+		    pPrecio.classList.add("price");
+		    pPrecio.textContent = "$" + product.precio;			
+
+			let button = document.createElement("button")
 			button.textContent = "Comprar"
 			button.classList.add("comprar")
-			content.append(button)
+
+			divProducts.append(content)
+			content.appendChild(imagenDom)
+            content.appendChild(h2)
+            content.appendChild(pDescripcion)
+            content.appendChild(pPrecio) 
+			content.appendChild(button)
 
 			button.addEventListener("click", (e) =>
 			{
@@ -83,6 +81,13 @@ function productosAlDom(data)
 						precio: product.precio,
 						cantidad: product.cantidad,
 					})
+					Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Producto agregado al carrito',
+                        showConfirmButton: false,
+                        timer: 700
+                      })
 				}
 
 				carritoContador()
@@ -96,4 +101,3 @@ function productosAlDom(data)
 
 const guardarLocalStorage = () => { localStorage.setItem("carrito", JSON.stringify(carrito)) }
 
-primeraCargaHTML()

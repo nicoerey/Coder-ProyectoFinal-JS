@@ -3,9 +3,19 @@ const eliminarProductoCarrito = (id) =>
 	const encontrar = carrito.find((element) => element.id === id)
 	carrito = carrito.filter((carritoId) => { return carritoId !== encontrar })
 
+	Swal.fire({
+		position: 'top-end',
+		icon: 'success',
+		title: 'Producto eliminado',
+		showConfirmButton: false,
+		timer: 600
+	})
+
 	dibujarCarrito()
 	guardarLocalStorage()
 	carritoContador()
+	carritoCero()
+	
 }
 
 const cerrarCarrito = () =>
@@ -36,15 +46,6 @@ const dibujarCarrito = () =>
 
 	carrito.forEach((product) =>
 	{
-
-		let botonSuma = document.createElement("span");
-		botonSuma.classList.add("suma");
-		botonSuma.textContent = ' + ';
-
-		let botonResta = document.createElement("span");
-		botonResta.classList.add("resta");
-		botonResta.textContent = ' - ';
-
 		let imagen = document.createElement("img");
 		imagen.src = product.imagen;
 		imagen.alt = product.nombre;
@@ -56,8 +57,16 @@ const dibujarCarrito = () =>
 		pPrecio.classList.add("price2");
 		pPrecio.textContent = "$" + product.precio;
 
+		let botonResta = document.createElement("span");
+		botonResta.classList.add("resta");
+		botonResta.textContent = ' - ';
+
 		let pCantidad = document.createElement("p");
 		pCantidad.textContent = product.cantidad;
+
+		let botonSuma = document.createElement("span");
+		botonSuma.classList.add("suma");
+		botonSuma.textContent = ' + ';
 
 		let pTotal = document.createElement("p");
 		pTotal.textContent = "Total: $" + product.precio * product.cantidad;
@@ -79,14 +88,13 @@ const dibujarCarrito = () =>
 
 		botonEliminardelCarrito.addEventListener("click", () =>
 		{
-			alertEliminar(product.id)
-			/* eliminarProductoCarrito(product.id) */
+			/* alertEliminar(product.id) */
+			eliminarProductoCarrito(product.id)
 		})
 
-		mostrarCarrito.append(botonEliminardelCarrito)
-		modalContainer.append(mostrarCarrito)
+		mostrarCarrito.appendChild(botonEliminardelCarrito)
+		modalContainer.appendChild(mostrarCarrito)
 
-		//let restaBoton = document.querySelector(".resta")
 		botonResta.addEventListener("click", () =>
 		{
 			if (product.cantidad > 1)
@@ -96,7 +104,6 @@ const dibujarCarrito = () =>
 			}
 		})
 
-		//let sumaBoton = document.querySelector(".suma")
 		botonSuma.addEventListener("click", () =>
 		{
 			if (product.cantidad >= 1 && product.cantidad < 10)
@@ -112,34 +119,57 @@ const dibujarCarrito = () =>
 
 	})
 
-	const total = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0)
-	const totalCarrito = document.createElement("div")
+	const total = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0) 
+ 	const totalCarrito = document.createElement("div")
 	totalCarrito.classList.add("total-content")
 	totalCarrito.innerHTML = `<p>Total a pagar: $${total}</p>`
 
 	const botonDeleteCarrito = document.createElement("button")
 	botonDeleteCarrito.classList.add("compra")
 	botonDeleteCarrito.innerText = "Eliminar todo"
-	modalContainer.append(botonDeleteCarrito)
+	modalContainer.appendChild(botonDeleteCarrito)
 
 	botonDeleteCarrito.addEventListener("click", () =>
-	{
-		carrito = [];
-		localStorage.removeItem("carrito");
-		cerrarCarrito();
-		carritoContador();
+	{	
+		alertEliminar()
+		
 	})
 
-	modalContainer.append(totalCarrito)
+	const finalizarCompra = document.createElement("button")
+	finalizarCompra.classList.add("compra")
+	finalizarCompra.innerText = "Finalizar Compra"
+
+	finalizarCompra.addEventListener("click", ()=> { 
+		if(totalItemsEnCarrito() > 0) {location.href = "./form.html"}
+		else {
+			Swal.fire({
+				position: 'top-end',
+				icon: 'warning',
+				title: 'Por favor ingrese prodcutos al carrito',
+				showConfirmButton: false,
+				timer: 900
+			})
+			cerrarCarrito()
+		}
+	})
+
+	modalContainer.appendChild(totalCarrito)
+	modalContainer.appendChild(finalizarCompra)
 }
 
-verCarrito.addEventListener("click", dibujarCarrito)
+if(verCarrito)
+{
+	verCarrito.addEventListener("click", dibujarCarrito)
+}
 
 const carritoContador = () => 
 {
-	cantidadCarrito.style.display = "block"
+	if(cantidadCarrito)
+	{
+		cantidadCarrito.style.display = "block"
 
-	cantidadCarrito.innerText = totalItemsEnCarrito();
+		cantidadCarrito.innerText = totalItemsEnCarrito();
+	}
 }
 
 const totalItemsEnCarrito = () =>
@@ -153,13 +183,6 @@ const totalItemsEnCarrito = () =>
 
 	return carritoCantidad;
 }
-
-/* Swal.fire({
-	Text: "Producto agregado exitosamente" ]
-})
-Swal.fire({
-	Text: ]
-}) */
 
 
 function alertEliminar(id)
@@ -184,17 +207,16 @@ function alertEliminar(id)
 	{
 		if (result.isConfirmed) 
 		{
-			eliminarProductoCarrito(id)
+			
 			swalWithBootstrapButtons.fire(
 				'Eliminado',
 				'Producto eliminado del carrito',
 				'success'
 			)
-
-			if (totalItemsEnCarrito() == 0)
-			{
-				cerrarCarrito();
-			}
+			vaciarCarrito()
+			cerrarCarrito();
+			carritoContador();
+			carritoCero()
 
 		} else if (
 			result.dismiss === Swal.DismissReason.cancel
@@ -207,4 +229,16 @@ function alertEliminar(id)
 			)
 		}
 	})
+}
+
+const carritoCero = ()=> {
+	if (totalItemsEnCarrito() == 0)
+			{
+				cerrarCarrito();
+			}
+}
+
+const vaciarCarrito =  ()=>{
+	carrito = []
+	localStorage.removeItem("carrito");
 }
